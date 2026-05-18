@@ -2,15 +2,46 @@
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Hero.css";
+import { FaArrowRight, FaCode, FaLightbulb, FaRocket } from "react-icons/fa";
 
 
 export default function About() {
-  // animation variants
+  const skills = [
+    "React.js",
+    "Java",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "SQL",
+    "Bootstrap",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Ethical Hacking",
+  ];
+
+  const highlights = [
+    {
+      icon: FaRocket,
+      title: "Hands-on builder",
+      copy: "I like learning by making projects that combine logic, structure, and real UI decisions.",
+    },
+    {
+      icon: FaCode,
+      title: "Clean execution",
+      copy: "I enjoy turning ideas into experiences that feel interactive, readable, and practical.",
+    },
+    {
+      icon: FaLightbulb,
+      title: "Curious mindset",
+      copy: "Exploring new tools and technologies is a core part of how I keep growing.",
+    },
+  ];
+
   const headingVariant = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
-
 
   const cardVariant = {
     hidden: { opacity: 0, y: 20 },
@@ -26,102 +57,115 @@ export default function About() {
     visible: { opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.6 } },
   };
 
+  const groupVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.08 },
+    },
+  };
+
+  const surfaceVariant = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
-    <section
-      id="about"
-      className="hero-section d-flex align-items-center py-5"
-      style={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(-45deg, #1e3c72, #2a5298, #3b5998, #4a6ea9)",
-        backgroundSize: "400% 400%",
-        animation: "gradientMove 15s ease infinite",
-      }}
-    >
-      <div className="particles">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
+    <section id="about" className="hero-section about-section section-shell page-fade">
+      <div className="particles" aria-hidden="true">
+        {[...Array(8)].map((_, index) => (
+          <span key={index}></span>
+        ))}
       </div>
 
-      <div className="container">
-        {/* Animated heading */}
+      <div className="section-container">
         <motion.h2
-          className="text-center mb-4 fw-bold text-primary"
+          className="section-heading section-heading-left"
           variants={headingVariant}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.6 }}
         >
-          About Me
+          <div>
+            <span className="section-kicker">About Me</span>
+            <h2 className="section-title">Curious, practical, and always learning.</h2>
+            <p className="section-copy">
+              I enjoy exploring technology from multiple angles, then turning
+              what I learn into projects that feel useful, interactive, and
+              thoughtfully built.
+            </p>
+          </div>
         </motion.h2>
 
-        <div className="row align-items-center">
-          <div className="col-md-4 text-center mb-4 mb-md-0">
-            {/* animated avatar circle */}
-            <motion.div
-              className="rounded-circle shadow-lg d-inline-flex align-items-center justify-content-center border border-light"
-              style={{
-                width: "230px",
-                height: "230px",
-                background: "linear-gradient(135deg, #2a5298 0%, #1e3c72 100%)",
-                color: "white",
-                fontSize: "2rem",
-                fontWeight: "bold",
-              }}
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
-            >
-              KT
-            </motion.div>
-          </div>
+        <div className="about-layout">
+          <motion.div
+            className="section-panel about-avatar-panel"
+            variants={cardVariant}
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+          >
+            <div className="avatar-badge">KT</div>
+            <div className="about-mini-card">
+              <span className="section-kicker">Focus</span>
+              <p className="mb-0">
+                Software development, problem solving, and exploring areas like
+                web, cloud, and other technical domains.
+              </p>
+            </div>
+            <div className="about-mini-card">
+              <span className="section-kicker">Approach</span>
+              <p className="mb-0">
+                Learn deeply, build consistently, and keep improving every
+                project.
+              </p>
+            </div>
+          </motion.div>
 
-          {/* About Text (card) */}
-          <div className="col-md-8">
-            <motion.div
-              className="p-4 rounded shadow-sm"
-              style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                border: "2px solid #1e90ff",
-                backdropFilter: "blur(8px)",
-              }}
-              custom={0}
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
-            >
-              <p className="lead mb-3">
-                👋 Hi! I’m <span className="fw-bold">Kritika Trivedi</span>, a tech
-                enthusiast who loves exploring different technologies, from
-                programming in C to experimenting with cloud computing. I enjoy
+          <motion.div
+            className="section-panel about-content-panel"
+            custom={1}
+            variants={cardVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+          >
+            <div className="about-copy-grid">
+              <p className="section-copy">
+                Hi! I&apos;m <strong>Kritika Trivedi</strong>, a tech enthusiast who
+                loves exploring different technologies, from programming in C
+                to web development, cloud concepts, and beyond. I enjoy
                 learning, experimenting, and building creative solutions across
-                various domains.
+                different domains instead of limiting myself to one path.
               </p>
 
-              <p className="mb-3">
+              <p className="section-copy">
                 I enjoy transforming ideas into interactive digital experiences
                 using clean code, logical thinking, and innovative approaches.
-                My curiosity drives me to explore new tools, frameworks, and
-                technologies constantly.
+                My curiosity keeps pulling me toward new tools, frameworks,
+                system concepts, and smarter ways to build in different kinds
+                of technical environments.
               </p>
+            </div>
 
-              <p>
-                <strong>Skills:</strong> React.js, Java, Node.js, Express.js,
-                MongoDB, SQL, Bootstrap, HTML, CSS, JavaScript, and Ethical
-                Hacking.
-              </p>
+            <div className="about-skill-grid">
+              {skills.map((skill) => (
+                <span className="tag-chip" key={skill}>
+                  {skill}
+                </span>
+              ))}
+            </div>
 
-              {/* Buttons row - buttons animate slightly after card */}
-              <div className="mt-4 d-flex flex-wrap gap-3">
-                <motion.a
+            <div className="mt-4 d-flex flex-wrap gap-3">
+              <motion.a
                   href="https://github.com/kritika1724"
-                  className="btn px-4 py-2 rounded-pill fw-semibold"
-                  style={{
-                    background: "linear-gradient(90deg, rgba(65,105,225,0.8), rgba(30,144,255,0.8))",
-                    color: "white",
-                    border: "none",
-                  }}
+                  className="primary-btn"
                   variants={btnVariant}
                   initial="hidden"
                   whileInView="visible"
@@ -129,15 +173,36 @@ export default function About() {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  🚀 View My Work
+                  View My Work
+                  <FaArrowRight />
                 </motion.a>
+            </div>
 
-                
+            <motion.div
+              className="about-highlights"
+              variants={groupVariant}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {highlights.map((item) => {
+                const HighlightIcon = item.icon;
 
-
-              </div>
+                return (
+                  <motion.div
+                    className="about-highlight-card"
+                    key={item.title}
+                    variants={surfaceVariant}
+                    whileHover={{ y: -6 }}
+                  >
+                    <HighlightIcon />
+                    <h3>{item.title}</h3>
+                    <p>{item.copy}</p>
+                  </motion.div>
+                );
+              })}
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

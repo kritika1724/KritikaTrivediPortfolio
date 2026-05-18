@@ -1,42 +1,145 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app-shell {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-main {
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes logo-spin {
+.page-fade {
+  animation: pageReveal 0.55s ease both;
+}
+
+@keyframes pageReveal {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(18px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.portfolio-navbar {
+  background: linear-gradient(
+    90deg,
+    rgba(21, 29, 57, 0.88),
+    rgba(27, 43, 84, 0.78)
+  );
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 45px rgba(24, 33, 66, 0.16);
+}
+
+.portfolio-nav-shell {
+  position: relative;
+}
+
+.nav-fireflies {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.portfolio-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.portfolio-brand:hover,
+.portfolio-brand:focus-visible {
+  color: #ffffff;
+}
+
+.portfolio-brand-name {
+  font-family: "Sora", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.portfolio-brand-role {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portfolio-navbar .navbar-collapse {
+  position: relative;
+  z-index: 1;
+}
+
+.portfolio-nav-link,
+.portfolio-external-link {
+  color: rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+  padding: 0.65rem 1rem !important;
+  font-weight: 600;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.portfolio-nav-link:hover,
+.portfolio-nav-link:focus-visible,
+.portfolio-nav-link.active,
+.portfolio-external-link:hover,
+.portfolio-external-link:focus-visible {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 12px 25px rgba(18, 25, 48, 0.12);
+  transform: translateY(-1px);
+}
+
+.portfolio-navbar .navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: none;
+}
+
+.portfolio-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.18);
+}
+
+@media (max-width: 991px) {
+  .portfolio-navbar .navbar-collapse {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(130, 143, 196, 0.18);
+    box-shadow: 0 20px 35px rgba(23, 33, 63, 0.12);
+  }
+
+  .portfolio-nav-link,
+  .portfolio-external-link {
+    color: var(--text);
+  }
+
+  .portfolio-brand-role {
+    letter-spacing: 0.1em;
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+@media (prefers-reduced-motion: reduce) {
+  .page-fade,
+  .portfolio-nav-link,
+  .portfolio-external-link {
+    animation: none;
+    transition: none;
+  }
 }

@@ -1,26 +1,35 @@
-import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { FaClock, FaExternalLinkAlt, FaLayerGroup } from "react-icons/fa";
 
 export default function Projects() {
   const projects = [
     {
-      title: "E-Commerce Website (In Progress)",
+      title: "E-Commerce Website",
       description:
-        "A full-stack e-commerce website with real-time product listings, secure user authentication, cart management, and payment integration. Frontend built in EJS templates. Currently adding advanced features and prepping deployment.",
-      techStack: "EJS, Node.js, Express.js, MongoDB, Bootstrap, AWS",
-      status: "In Progress",
-      link: "#",
+        "A live e-commerce website with real-time product listings, secure user authentication, cart management, and payment integration. Built with a React frontend and deployed for public access.",
+      techStack: "React.js, Node.js, Express.js, MongoDB, Bootstrap",
+      status: "Completed",
+      link: "https://kannauj-attars.onrender.com/",
       color: "rgba(255, 182, 193, 0.2)",
     },
     {
-      title: "Full-Stack Stock Monitoring Tool",
+      title: "Stock Monitoring Tool",
       description:
         "Built a stock-tracking app with real-time data, secure authentication, and MongoDB integration. Added unit tests (Jest) and prepping AWS deployment.",
       techStack: "React.js, Node.js, Express.js, MongoDB, Bootstrap",
       link: "https://github.com/kritika1724/Fullstack-stock-monitoring",
       color: "rgba(173, 216, 230, 0.2)",
+    },
+    {
+      title: "Essence Exchange",
+      description:
+        "Developed a perfume marketplace with secure authentication, ownership-based CRUD operations, and a validated review system for a smoother user experience.",
+      techStack: "Node.js, Express.js, MongoDB, EJS",
+      status: "Completed",
+      link: "https://github.com/kritika1724/EssenceExchange",
+      color: "rgba(255, 221, 173, 0.24)",
     },
     {
       title: "Fake News Detection Model",
@@ -55,119 +64,115 @@ export default function Projects() {
     },
   ];
 
+  const containerVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+    },
+  };
+
+  const cardVariant = {
+    hidden: { opacity: 0, y: 26, scale: 0.97 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
-    <section id="projects" className="projects-section py-5 position-relative">
-      {/* Floating Particles */}
-      <div className="particles">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
+    <section
+      id="projects"
+      className="hero-section projects-section section-shell page-fade"
+    >
+      <div className="particles" aria-hidden="true">
+        {[...Array(8)].map((_, index) => (
+          <span key={index}></span>
+        ))}
       </div>
 
-      <div className="container position-relative">
-        {/* Animated Heading */}
-        <motion.h2
-          className="text-center mb-5 fw-bold text-primary"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          My Projects
-        </motion.h2>
+      <div className="section-container">
+        <div className="section-heading">
+          <span className="section-kicker">Projects</span>
+          <h2 className="section-title">Projects that helped me learn by building.</h2>
+          <p className="section-copy mx-auto">
+            These projects reflect software development, problem solving, and
+            experimentation across web and machine learning use cases.
+          </p>
+        </div>
 
-        {/* Animated Cards */}
-        <div className="row g-4">
-          {projects.map((project, index) => (
+        <motion.div
+          className="project-grid"
+          variants={containerVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.12 }}
+        >
+          {projects.map((project, index) => {
+            const status = project.status ?? "Completed";
+            const techItems = project.techStack.split(", ");
+            const hasLink = project.link && project.link !== "#";
+
+            return (
             <motion.div
-              className="col-md-4"
+              className="h-100"
               key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: index * 0.2, duration: 0.6, ease: "easeOut" }}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,255,255,0.3)" }}
+              variants={cardVariant}
+              whileHover={{ y: -8 }}
             >
               <div
-                className="card h-100 shadow-sm p-3 project-card"
+                className="project-card section-panel"
                 style={{
-                  background: project.color,
-                  border: "2px solid #1e90ff",
-                  backdropFilter: "blur(10px)",
-                  borderRadius: "1rem",
-                  color: "white",
-                  transition: "all 0.3s ease",
+                  backgroundColor: project.color,
                 }}
               >
-                <div className="card-body d-flex flex-column text">
-                  <h5 className="card-title fw-bold">{project.title}</h5>
-                  <p className="card-text flex-grow-1">{project.description}</p>
-                  <a
-                    href={project.link}
-                    className="btn btn-outline-primary mt-2"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View Project
-                  </a>
+                <div className="project-top">
+                  <div>
+                    <span className="project-status">{status}</span>
+                    <h3 className="project-title">{project.title}</h3>
+                  </div>
+                  <span className="tag-chip">
+                    <FaLayerGroup />
+                    {techItems.length} tools
+                  </span>
+                </div>
+
+                <p className="project-description">{project.description}</p>
+
+                <div className="tech-list">
+                  {techItems.map((item) => (
+                    <span className="tech-pill" key={item}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="project-link-row">
+                  {hasLink ? (
+                    <a
+                      href={project.link}
+                      className="project-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Project
+                      <FaExternalLinkAlt />
+                    </a>
+                  ) : (
+                    <span className="disabled-pill">
+                      <FaClock />
+                      Link coming soon
+                    </span>
+                  )}
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
+            );
+          })}
+        </motion.div>
       </div>
-
-      {/* Embedded CSS */}
-      <style>{`
-        .projects-section {
-          position: relative;
-          overflow: hidden;
-          background: linear-gradient(-45deg, #FF69B4, #FFB6C1, #FFC0CB, #FFDDEE);
-          background-size: 400% 400%;
-          animation: gradientMove 15s ease infinite;
-          color: white;
-        }
-
-        @keyframes gradientMove {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .particles {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        .particles span {
-          position: absolute;
-          display: block;
-          width: 8px;
-          height: 8px;
-          background: rgba(255,255,255,0.6);
-          border-radius: 50%;
-          animation: float 10s linear infinite;
-        }
-
-        .particles span:nth-child(1) { left: 10%; animation-duration: 8s; }
-        .particles span:nth-child(2) { left: 25%; animation-duration: 12s; }
-        .particles span:nth-child(3) { left: 40%; animation-duration: 10s; }
-        .particles span:nth-child(4) { left: 60%; animation-duration: 14s; }
-        .particles span:nth-child(5) { left: 75%; animation-duration: 11s; }
-        .particles span:nth-child(6) { left: 90%; animation-duration: 13s; }
-
-        @keyframes float {
-          0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translateY(-10vh) translateX(20px); opacity: 0; }
-        }
-
-        .projects-section .container {
-          position: relative;
-          z-index: 1;
-        }
-      `}</style>
     </section>
   );
 }

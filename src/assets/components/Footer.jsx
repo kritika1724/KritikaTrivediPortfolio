@@ -3,37 +3,59 @@ import "./Footer.css";
 import "./FireFly.css";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+  const links = [
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/kritika-trivedi-86b213246/",
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/kritika1724",
+    },
+    {
+      label: "Twitter",
+      href: "#",
+      disabled: true,
+    },
+  ];
+
   return (
-    <footer className="footer-glass text-white position-relative">
-      {/* Floating particles */}
+    <footer className="footer-glass">
       <div className="footer-particles">
         {[...Array(25)].map((_, i) => (
           <div key={i} className="firefly"></div>
         ))}
       </div>
 
-      <div className="container text-center position-relative py-3" style={{ zIndex: 2 }}>
-        <p className="mb-1 small"> Made with <span className="heart">♥</span> by <strong>Kritika Trivedi</strong> © 2025</p>
-        <div className="d-flex justify-content-center flex-wrap gap-3">
-          <a
-            href="https://www.linkedin.com/in/kritika-trivedi-86b213246/"
-            className="footer-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://github.com/kritika1724"
-            className="footer-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <a href="#" className="footer-link">
-            Twitter
-          </a>
+      <div className="section-container footer-shell">
+        <div className="footer-copy-block">
+          <p className="footer-copy">
+            Made with <span className="heart">♥</span> by{" "}
+            <strong>Kritika Trivedi</strong> © {currentYear}
+          </p>
+          <p className="footer-note">
+            Learning across software, problem solving, and continuous improvement.
+          </p>
+        </div>
+        <div className="footer-links">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className={`footer-link${link.disabled ? " is-disabled" : ""}`}
+              target={link.disabled ? undefined : "_blank"}
+              rel={link.disabled ? undefined : "noopener noreferrer"}
+              onClick={(event) => {
+                if (link.disabled) {
+                  event.preventDefault();
+                }
+              }}
+              aria-disabled={link.disabled ? "true" : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
     </footer>

@@ -1,5 +1,4 @@
-import React from "react";
-import "./Firefly.css";
+import "./FireFly.css";
 
 export default function FireflyFooter() {
   return (

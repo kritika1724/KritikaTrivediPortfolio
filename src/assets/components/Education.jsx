@@ -1,4 +1,3 @@
-import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Hero.css";
 // eslint-disable-next-line no-unused-vars
@@ -29,64 +28,77 @@ export default function Education() {
     },
   ];
 
+  const headingVariant = {
+    hidden: { opacity: 0, y: 22 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
     <section
       id="education"
-      className="hero-section d-flex align-items-center py-5"
-      style={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(-45deg, #FF69B4, #FFB6C1, #FFC0CB, #FFDDEE)",
-      }}
+      className="hero-section education-section section-shell page-fade"
     >
-      {/* Floating Particles */}
       <div className="particles" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
+        {[...Array(8)].map((_, index) => (
+          <span key={index}></span>
+        ))}
       </div>
 
-      <div className="container text-white">
-        {/* 🎬 Animated Heading */}
-        <motion.h2
-          className="text-center mb-4 fw-bold text-primary"
-          initial={{ opacity: 0, y: -40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+      <div className="section-container">
+        <motion.div
+          className="section-heading"
+          variants={headingVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.35 }}
         >
-          Education
-        </motion.h2>
+          <span className="section-kicker">Education</span>
+          <h2 className="section-title">My academic journey so far.</h2>
+          <p className="section-copy mx-auto">
+            A simple snapshot of the milestones that shaped my technical
+            foundation and where I am continuing to grow.
+          </p>
+        </motion.div>
 
-        <div className="row g-4 justify-content-center">
+        <div className="education-stack">
           {education.map((edu, index) => (
             <motion.div
-              className="col-md-6"
               key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              initial={{
+                opacity: 0,
+                x: index % 2 === 0 ? -42 : 42,
+                y: 24,
+                scale: 0.97,
+              }}
+              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+              whileHover={{ y: -6 }}
+              transition={{
+                duration: 0.7,
+                delay: index * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               viewport={{ once: true }}
             >
-              <div
-                className="card shadow-sm education-card"
-                style={{
-                  background: edu.bgColor,
-                  border: "2px solid #1e90ff",
-                }}
-              >
-                <div className="card-body">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h5 className="card-title fw-bold mb-0 text-white">
+              <div className="education-card section-panel">
+                <div>
+                  <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                    <h3 className="project-title mb-0">
                       {edu.degree}
-                    </h5>
-                    <span className="text-primary small">{edu.year}</span>
+                    </h3>
+                    <span className="education-year">{edu.year}</span>
                   </div>
-                  <p className="card-text mb-1 text-primary">{edu.college}</p>
-                  <p className="card-text text-light">
-                    {edu.degree.toLowerCase().includes("b.tech")
-                      ? `CGPA: ${edu.cgpa}`
-                      : `Percentage: ${edu.percentage}`}
-                  </p>
+                  <div className="education-meta">
+                    <p className="education-school">{edu.college}</p>
+                    <span className="education-value">
+                      {edu.degree.toLowerCase().includes("b.tech")
+                        ? `CGPA: ${edu.cgpa}`
+                        : `Percentage: ${edu.percentage}`}
+                    </span>
+                  </div>
                 </div>
               </div>
             </motion.div>
