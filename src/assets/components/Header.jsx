@@ -1,85 +1,67 @@
-import { Link, NavLink } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./FireFly.css";
+import { useEffect, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { externalLinks, navItems, profile } from "../../data/portfolio";
 
-export default function Header() {
-  const navLinks = [
-    { label: "About", path: "/about" },
-    { label: "Education", path: "/education" },
-    { label: "Skills", path: "/skills" },
-    { label: "Projects", path: "/projects" },
-    { label: "Hobbies", path: "/hobbies" },
-  ];
+export default function Header({ activeSection, onNavigate }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const externalLinks = [
-    {
-      label: "LeetCode",
-      href: "https://leetcode.com/u/kritika2117/",
-    },
-    {
-      label: "My Card",
-      href: "https://my-card-eight-iota.vercel.app/",
-    },
-  ];
+  useEffect(() => {
+    const update = () => setIsScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  const handleNav = (item) => {
+    setIsOpen(false);
+    onNavigate(item);
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top portfolio-navbar">
-      <div className="container portfolio-nav-shell">
-        <div className="nav-fireflies" aria-hidden="true">
-          {[...Array(16)].map((_, index) => (
-            <div key={index} className="firefly"></div>
-          ))}
-        </div>
-
-        <Link className="navbar-brand portfolio-brand" to="/">
-          <span className="portfolio-brand-name">Kritika Trivedi</span>
-          <span className="portfolio-brand-role">Software Engineer</span>
-        </Link>
-
+    <header className={`site-header${isScrolled ? " is-scrolled" : ""}`}>
+      <nav className="nav-shell" aria-label="Primary navigation">
         <button
-          className="navbar-toggler"
+          className="brand-button"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          onClick={() => handleNav({ path: "/", id: "hero" })}
+          aria-label="Go to home"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="brand-mark">KT</span>
+          <span>
+            <strong>{profile.name}</strong>
+            <small>{profile.role}</small>
+          </span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-1 fw-semibold">
-            {navLinks.map((item) => (
-              <li className="nav-item" key={item.path}>
-                <NavLink
-                  className={({ isActive }) =>
-                    `nav-link portfolio-nav-link${isActive ? " active" : ""}`
-                  }
-                  to={item.path}
-                >
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
+        <button
+          className="menu-button"
+          type="button"
+          onClick={() => setIsOpen((value) => !value)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
 
-            {externalLinks.map((item) => (
-              <li className="nav-item" key={item.href}>
-                <a
-                  className="nav-link portfolio-external-link"
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-
+        <div className={`nav-links${isOpen ? " is-open" : ""}`}>
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={activeSection === item.id ? "active" : ""}
+              onClick={() => handleNav(item)}
+            >
+              {item.label}
+            </button>
+          ))}
+          {externalLinks.map((link) => (
+            <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))}
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

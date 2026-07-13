@@ -1,61 +1,24 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Footer.css";
-import "./FireFly.css";
+import { profile, socialLinks } from "../../data/portfolio";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const links = [
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/kritika-trivedi-86b213246/",
-    },
-    {
-      label: "GitHub",
-      href: "https://github.com/kritika1724",
-    },
-    {
-      label: "Twitter",
-      href: "#",
-      disabled: true,
-    },
-  ];
 
   return (
-    <footer className="footer-glass">
-      <div className="footer-particles">
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="firefly"></div>
-        ))}
-      </div>
-
+    <footer className="site-footer">
       <div className="section-container footer-shell">
-        <div className="footer-copy-block">
-          <p className="footer-copy">
-            Made with <span className="heart">♥</span> by{" "}
-            <strong>Kritika Trivedi</strong> © {currentYear}
-          </p>
-          <p className="footer-note">
-            Learning across software, problem solving, and continuous improvement.
-          </p>
-        </div>
-        <div className="footer-links">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className={`footer-link${link.disabled ? " is-disabled" : ""}`}
-              target={link.disabled ? undefined : "_blank"}
-              rel={link.disabled ? undefined : "noopener noreferrer"}
-              onClick={(event) => {
-                if (link.disabled) {
-                  event.preventDefault();
-                }
-              }}
-              aria-disabled={link.disabled ? "true" : undefined}
-            >
-              {link.label}
-            </a>
-          ))}
+        <p>
+          Made by <strong>{profile.name}</strong> © {currentYear}
+        </p>
+        <div>
+          {socialLinks.slice(0, 2).map((link) => {
+            const Icon = link.icon;
+            return (
+              <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                <Icon />
+                {link.label}
+              </a>
+            );
+          })}
         </div>
       </div>
     </footer>
